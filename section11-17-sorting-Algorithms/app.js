@@ -68,6 +68,58 @@
 // console.log(bubbleSort([15, 3, -1, 30, 48, 21, 0, 99, 10]));
 // console.log(bubbleSort([1, 2, 3, 5, 4]));
 
+//// bubble sort with comparator function
+// function bubbleSort(arr, comparator) {
+//   function swap(arr, index1, index2) {
+//     let temp;
+//     temp = arr[index1];
+//     arr[index1] = arr[index2];
+//     arr[index2] = temp;
+//   }
+
+//   let noSwaps;
+//   let compareValue;
+//   for (let i = 0; i < arr.length; i++) {
+//     noSwaps = true;
+//     for (let j = 0; j < arr.length - 1 - i; j++) {
+//       // if compare function passed as an argument
+//       if (typeof comparator === "function") {
+//         compareValue = comparator(arr[j], arr[j + 1]);
+//         if (compareValue > 0) {
+//           // swap
+//           swap(arr, j, j + 1);
+//           noSwaps = false;
+//         }
+//       } else {
+//         if (arr[j] > arr[j + 1]) {
+//           // swap
+//           swap(arr, j, j + 1);
+//           noSwaps = false;
+//         }
+//       }
+//     }
+
+//     if (noSwaps) break;
+//   }
+
+//   return arr;
+// }
+
+// let kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+// // let kitties = [4, 20, 12, 10, 7, 9];
+
+// function strComp(a, b) {
+//   if (a < b) {
+//     return -1;
+//   } else if (a > b) {
+//     return 1;
+//   }
+//   return 0;
+// }
+
+// console.log(bubbleSort(kitties, strComp));
+// ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+
 ////////////////////////////////////
 // Selection Sort
 
@@ -100,6 +152,84 @@
 // console.log(selectionSort([1, 2, 3, 5, 4]));
 // console.log(selectionSort([]));
 
+//// Selection sort with comparator function
+// function selectionSort(arr, comparator) {
+//   function swap(arr, index1, index2) {
+//     let temp;
+//     temp = arr[index1];
+//     arr[index1] = arr[index2];
+//     arr[index2] = temp;
+//   }
+
+//   let minIndex;
+//   let comparatorVal;
+//   for (let i = 0; i < arr.length; i++) {
+//     minIndex = i;
+//     for (let j = i + 1; j < arr.length; j++) {
+//       if (typeof comparator === "function") {
+//         comparatorVal = comparator(arr[j], arr[minIndex]);
+//         if (comparatorVal < 0) {
+//           minIndex = j;
+//         }
+//       } else {
+//         if (arr[j] < arr[minIndex]) {
+//           minIndex = j;
+//         }
+//       }
+//     }
+
+//     if (minIndex !== i) {
+//       // swap
+//       swap(arr, i, minIndex);
+//     }
+//   }
+
+//   return arr;
+// }
+
+// let moarKittyData = [
+//   {
+//     name: "LilBub",
+//     age: 7,
+//   },
+//   {
+//     name: "Garfield",
+//     age: 40,
+//   },
+//   {
+//     name: "Heathcliff",
+//     age: 45,
+//   },
+//   {
+//     name: "Blue",
+//     age: 1,
+//   },
+//   {
+//     name: "Grumpy",
+//     age: 6,
+//   },
+// ];
+
+// function oldestToYoungest(a, b) {
+//   return b.age - a.age;
+// }
+
+// console.log(selectionSort(moarKittyData, oldestToYoungest));
+
+// let kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+// let kitties = [4, 20, 12, 10, 7, 9];
+
+// function strComp(a, b) {
+//   if (a < b) {
+//     return -1;
+//   } else if (a > b) {
+//     return 1;
+//   }
+//   return 0;
+// }
+
+// console.log(selectionSort(kitties, strComp));
+
 ////////////////////////////////////
 // Insertion Sort
 // function insertionSort(arr) {
@@ -127,6 +257,64 @@
 // console.log(insertionSort([1, 2, 3, 5, 4]));
 // console.log(insertionSort([13, 0, -1, 0, 14, 7, 10]));
 // console.log(insertionSort([]));
+
+//// Insertion sort with comparator function
+function insertionSort(arr, comparator) {
+  let currentVal;
+  let insertPos;
+
+  function getCompareVal(val1, val2) {
+    let comparatorVal =
+      typeof comparator === "function"
+        ? comparator(val1, val2) < 0
+        : val1 < val2;
+    return comparatorVal;
+  }
+
+  for (let i = 1; i < arr.length; i++) {
+    currentVal = arr[i];
+    insertPos = i;
+
+    for (let j = i - 1; j >= 0 && getCompareVal(currentVal, arr[j]); j--) {
+      arr[j + 1] = arr[j];
+      insertPos = j;
+    }
+
+    // insert correct item
+    arr[insertPos] = currentVal;
+  }
+
+  return arr;
+}
+
+var moarKittyData = [
+  {
+    name: "LilBub",
+    age: 7,
+  },
+  {
+    name: "Garfield",
+    age: 40,
+  },
+  {
+    name: "Heathcliff",
+    age: 45,
+  },
+  {
+    name: "Blue",
+    age: 1,
+  },
+  {
+    name: "Grumpy",
+    age: 6,
+  },
+];
+
+function oldestToYoungest(a, b) {
+  return b.age - a.age;
+}
+
+console.log(insertionSort(moarKittyData, oldestToYoungest));
 
 /////////////////////////////////////////////////
 /****************************************** */
@@ -273,44 +461,44 @@
 
 // console.log(getMaxDigitNumber([145, 12, 1489, 1, 0, -1]));
 
-function getDigit(num, i) {
-  return Math.floor(Math.abs(num) / Math.pow(10, i)) % 10;
-}
+// function getDigit(num, i) {
+//   return Math.floor(Math.abs(num) / Math.pow(10, i)) % 10;
+// }
 
-////// lecture solution for this method
-function digitCount(num) {
-  if (num === 0) return 1;
-  return Math.floor(Math.log10(Math.abs(num))) + 1;
-}
+// ////// lecture solution for this method
+// function digitCount(num) {
+//   if (num === 0) return 1;
+//   return Math.floor(Math.log10(Math.abs(num))) + 1;
+// }
 
-function getMaxDigit(arr) {
-  let max = 0;
-  for (let i = 0; i < arr.length; i++) {
-    let itemDigitCount = digitCount(arr[i]);
-    if (itemDigitCount > max) {
-      max = itemDigitCount;
-    }
-  }
+// function getMaxDigit(arr) {
+//   let max = 0;
+//   for (let i = 0; i < arr.length; i++) {
+//     let itemDigitCount = digitCount(arr[i]);
+//     if (itemDigitCount > max) {
+//       max = itemDigitCount;
+//     }
+//   }
 
-  return max;
-}
+//   return max;
+// }
 
-function radixSort(arr) {
-  const max = getMaxDigit(arr);
-  let digitsArr = [[], [], [], [], [], [], [], [], [], []];
-  let curDigit;
+// function radixSort(arr) {
+//   const max = getMaxDigit(arr);
+//   let digitsArr = [[], [], [], [], [], [], [], [], [], []];
+//   let curDigit;
 
-  for (let i = 0; i < max; i++) {
-    digitsArr = [[], [], [], [], [], [], [], [], [], []];
-    for (let j = 0; j < arr.length; j++) {
-      curDigit = getDigit(arr[j], i);
-      digitsArr[curDigit].push(arr[j]);
-    }
-    arr = digitsArr.flat(1);
-  }
+//   for (let i = 0; i < max; i++) {
+//     digitsArr = [[], [], [], [], [], [], [], [], [], []];
+//     for (let j = 0; j < arr.length; j++) {
+//       curDigit = getDigit(arr[j], i);
+//       digitsArr[curDigit].push(arr[j]);
+//     }
+//     arr = digitsArr.flat(1);
+//   }
 
-  return arr;
-}
+//   return arr;
+// }
 
-console.log(radixSort([158, 14789, -5, -1, 32, 0, 1]));
-console.log(radixSort([158, 14789, 5, 1, 32, 0, 15]));
+// console.log(radixSort([158, 14789, -5, -1, 32, 0, 1]));
+// console.log(radixSort([158, 14789, 5, 1, 32, 0, 15]));
