@@ -195,4 +195,3 @@ console.log(graph);
 console.log(graph.dijkstraShortestPath("A", "E")); // A-C-D-F-E
 console.log(graph.dijkstraShortestPath("A", "C"));
 console.log(graph.dijkstraShortestPath("A", "F"));
-console.log(graph.dijkstraShortestPath("B", "F"));
