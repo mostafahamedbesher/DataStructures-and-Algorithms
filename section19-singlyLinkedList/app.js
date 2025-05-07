@@ -207,16 +207,43 @@ class SinglyLinkedList {
   getLength() {
     return this.length;
   }
+
+  // this method also accepts negative numbers
+  rotate(rotNumber) {
+    if (
+      (rotNumber > 0 && rotNumber > this.length - 1) ||
+      (rotNumber < 0 && Math.abs(rotNumber) > this.length) ||
+      Math.abs(rotNumber) === this.length ||
+      this.length === 0 ||
+      rotNumber === 0
+    )
+      return this;
+
+    let tempPtr = this.head;
+    let indexCounter = 0;
+    let threshold =
+      rotNumber < 0 ? Math.abs(this.length + rotNumber - 1) : rotNumber - 1;
+
+    while (indexCounter < threshold) {
+      tempPtr = tempPtr.next;
+      indexCounter++;
+    }
+
+    this.tail.next = this.head;
+    this.tail = tempPtr;
+    this.head = tempPtr.next;
+    this.tail.next = null;
+  }
 }
 
 const list = new SinglyLinkedList();
 //////////// push method /////////////
-list.push("5");
-list.push("48");
-list.push("mostafa");
-list.push("besher");
-list.traverse();
-console.log("***************************");
+// list.push("5");
+// list.push("48");
+// list.push("mostafa");
+// list.push("besher");
+// list.traverse();
+// console.log("***************************");
 
 //////////// pop method /////////////
 // console.log("popped", list.pop());
@@ -279,6 +306,19 @@ console.log("***************************");
 // console.log(list);
 
 //////////// reverse method /////////////
-list.reverse();
+// list.reverse();
+// list.traverse();
+// console.log(list);
+
+//////////// rotate method /////////////
+list.push(1);
+list.push(2);
+list.push(3);
+list.push(4);
+list.push(5);
+
 list.traverse();
+console.log("***************************");
+list.rotate(2);
 console.log(list);
+list.traverse();
